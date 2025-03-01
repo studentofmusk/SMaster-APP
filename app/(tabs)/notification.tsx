@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const NotFound = () => {
+const notification = () => {
   return (
     <View>
-      <Text>NotFound</Text>
+      <Text>notification</Text>
     </View>
   )
 }
 
-export default NotFound
+export default notification
