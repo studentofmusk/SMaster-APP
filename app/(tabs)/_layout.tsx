@@ -1,45 +1,42 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { View, Text } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Tabs } from 'expo-router'
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const RootTab = () => {
   return (
-    <Tabs
+    <SafeAreaView className='' style={{flex:1}}>
+      <Tabs 
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+        tabBarStyle:{
+          backgroundColor: "#fff",
+          paddingBottom: 5
+        },
+        tabBarActiveTintColor:"#f03",
+        tabBarInactiveTintColor:"gray",
+        headerShown:false
+      }}
+      >
+
+        <Tabs.Screen 
+          name='index'
+          options={{
+            title: "Home",
+            tabBarIcon:(({color, size})=><View><Text style={{color}}>H</Text></View>)
+          }}
+        />
+
+        <Tabs.Screen 
+          name='explore'
+          options={{
+            title: "Explore",
+            tabBarIcon:(({color, size})=><View><Text className='text-green-600' >E</Text></View>)
+          }}
+        />
+        
+      </Tabs>
+    </SafeAreaView>
+  )
 }
+
+export default RootTab
