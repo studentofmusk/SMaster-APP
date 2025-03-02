@@ -1,36 +1,36 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 
 export default function GetStartedScreen() {
   const router = useRouter();
+  useEffect(()=>{
+    setTimeout(()=>router.replace("/start"), 3000)
+  }, [])
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
-      {/* Logo */}
-      <Image source={require("../assets/images/Logo.png")} style={{ width: 150, height: 150, marginBottom: 20 }} />
+      
+      <View className="items-center justify-center">
 
-      {/* Title */}
-      <Text style={{ fontSize: 24, fontWeight: "bold", color: "#333", marginBottom: 10 }}>
-        Welcome to Our App!
-      </Text>
+        {/* Logo */}
+        <Image source={require("../assets/images/Logo.png")} className="size-60" />
+        <View className="mt-2 mb-5" >
+          <Text className="text-4xl font-bold text-primary">SMaster</Text>
+        </View>
+        <View className="flex flex-row items-center justify-center">
+          <View className="h-1 w-10 bg-violet"></View>
+            
+          <View>
+            <Text className="text-xl mx-3 uppercase">Sign Master</Text>
+          </View>
 
-      {/* Description */}
-      <Text style={{ fontSize: 16, color: "#555", textAlign: "center", paddingHorizontal: 20, marginBottom: 30 }}>
-        Get started and explore amazing features.
-      </Text>
+          <View className="h-1 w-10 bg-violet"></View>
 
-      {/* Get Started Button */}
-      <TouchableOpacity
-        onPress={() => router.replace("/(tabs)")}
-        style={{
-          backgroundColor: "#1D267D",
-          paddingVertical: 12,
-          paddingHorizontal: 30,
-          borderRadius: 8,
-        }}
-      >
-        <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>Get Started</Text>
-      </TouchableOpacity>
+
+        </View>
+
+      </View>
     </View>
   );
 }

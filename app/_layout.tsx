@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect } from 'react';
 import 'react-native-reanimated';
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -13,35 +13,40 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Junge: require('../assets/fonts/Junge-Regular.ttf'),
+    Inder: require('../assets/fonts/Inder-Regular.ttf'),
+
   });
 
-  // Hide the splash screen once fonts are loaded
-  const onLayoutRootView = useCallback(async()=>{
-    if(fontsLoaded){
-      await SplashScreen.hideAsync();
-    }
-    
+  // Hide splash screen once fonts are loaded
+  useEffect(() => {
+    const hideSplash = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+    hideSplash();
   }, [fontsLoaded]);
 
-  if( !fontsLoaded){
+  if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
         <ActivityIndicator size="large" color="#1D267D" />
       </View>
-    )
+    );
   }
 
-
   return (
-    <View  style={{flex:1}} onLayout={onLayoutRootView}>
-
+    <View style={{ flex: 1 }} className="bg-white">
+      <StatusBar style="auto"  />
       <Stack>
-        <Stack.Screen name="index" options={{headerShown:false}} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="start" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="signup" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
-        <StatusBar style="auto" />
       </Stack>
     </View>
-    
   );
 }
