@@ -2,7 +2,8 @@ import { View, Text, Image } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function GetStartedScreen() {
-  const {loading} = useAuth();
+  const {loading} = useAuth("/(tabs)");
+  
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>

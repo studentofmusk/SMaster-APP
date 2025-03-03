@@ -56,7 +56,7 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
         await dispatch(fetchUserProfile());
 
     } catch (error: any) {
-        console.error("Login error:", error);
+        // console.error("Login error:", error);
         throw new Error(error?.message || "Login failed!"); // Re-throw for UI handling
     } finally {
         dispatch(setLoading(false));
