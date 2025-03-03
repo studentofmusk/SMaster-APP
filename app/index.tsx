@@ -1,12 +1,8 @@
 import { View, Text, Image } from "react-native";
-import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function GetStartedScreen() {
-  const router = useRouter();
-  useEffect(()=>{
-    setTimeout(()=>router.replace("/start"), 3000)
-  }, [])
+  const {loading} = useAuth();
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
