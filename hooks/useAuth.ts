@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { fetchUserProfile } from "@/store/userSlice";
 
-export const useAuth = () => {
+export const useAuth = (redirect:string="") => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,11 @@ export const useAuth = () => {
         const token = await AsyncStorage.getItem("token");
         if (token) {
           await dispatch(fetchUserProfile());
+          if (redirect){
+            router.replace(redirect as any);
+          }
         } else {
+        
           router.replace("/login");
         }
       } catch (error) {
