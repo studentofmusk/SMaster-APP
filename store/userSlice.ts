@@ -2,9 +2,10 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { fetchUser, login } from "@/api/auth";
 import {AppDispatch} from "./store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IUser } from "@/interfaces/User";
 
 interface IUserState {
-    user: any;
+    user: null | IUser;
     token: string | null;
     loading: boolean;
 }
@@ -53,10 +54,9 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
         dispatch(setToken(token));
 
         // ✅ Ensure user profile is fetched before continuing
-        await dispatch(fetchUserProfile());
+        dispatch(fetchUserProfile());
 
     } catch (error: any) {
-        // console.error("Login error:", error);
         throw new Error(error?.message || "Login failed!"); // Re-throw for UI handling
     } finally {
         dispatch(setLoading(false));
@@ -68,7 +68,8 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
 export const fetchUserProfile = ()=> async(dispatch: AppDispatch)=>{
     try {
         const userData = await fetchUser();
-        dispatch(setUser(userData));
+        // console.log("Fetched:", userData)
+        dispatch(setUser(userData.data));
     } catch (error) {
         console.error(error);
     }

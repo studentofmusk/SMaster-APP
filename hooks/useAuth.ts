@@ -15,13 +15,13 @@ export const useAuth = (redirect:string="") => {
       try {
         const token = await AsyncStorage.getItem("token");
         if (token) {
-          await dispatch(fetchUserProfile());
+          dispatch(fetchUserProfile());
           if (redirect){
             router.replace(redirect as any);
           }
         } else {
         
-          router.replace("/login");
+          router.replace("/start");
         }
       } catch (error) {
         console.error("Auth Check Error:", error);

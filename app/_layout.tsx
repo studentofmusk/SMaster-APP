@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import {Provider} from "react-redux";
 import 'react-native-reanimated';
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Text } from "react-native";
 import { store } from "@/store/store";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -43,15 +43,17 @@ export default function RootLayout() {
     <Provider store={store}>
 
       <View style={{ flex: 1 }} className="bg-white">
-        <StatusBar style="auto"  />
+        
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="start" options={{ headerShown: false }} />
           <Stack.Screen name="login" options={{ headerShown: false }} />
           <Stack.Screen name="signup" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(lesson)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
+        <StatusBar style="dark"  backgroundColor="white" />
       </View>
     </Provider>
   );

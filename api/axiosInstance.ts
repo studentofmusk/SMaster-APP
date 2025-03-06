@@ -1,6 +1,5 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {SERVER} from "@env";
 
 
 const API = axios.create({
@@ -22,8 +21,10 @@ API.interceptors.request.use(
 
 export default API;
 
-export interface IAPIResponse<T=any>{
+export type IAPIResponse<T> = {
     success: boolean;
     message: string;
-    data?:T
+    data?: T;
+    errors?: any;
+    token?: string;
 }
