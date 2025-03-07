@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IV2Text, IVideo } from '@/interfaces/Course'
 import { useLesson } from '@/contexts/LessonContext';
 import VideoPlayer from './VideoPlayer';
 
-const V2Text:React.FC<{video?:IVideo, v2text?: IV2Text}> = ({
+const V2Text:React.FC<{video?:IVideo, v2text?: IV2Text, onCorrect:()=>void, onWrong:()=>void}> = ({
     video,
-    v2text
-}) => {
+    v2text,
+    onCorrect,
+    onWrong
+}) => { 
     const {goToNext} = useLesson();
     const [select, setSelect] = useState<null|number>(null);
     const handleNext = ()=>{

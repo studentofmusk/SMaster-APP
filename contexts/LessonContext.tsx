@@ -19,7 +19,8 @@ interface LessonContextType {
   update_xp: (xp:number)=>void;
   goToNext: ()=>void;
   finished: boolean;
-  changeCurrentIndex: (idx: number)=>void
+  changeCurrentIndex: (idx: number)=>void;
+  reset_xp:()=>void;
 }
 
 // Create a context with the defined type
@@ -37,7 +38,8 @@ const LessonContext = createContext<LessonContextType>({
     update_xp:(xp)=>{},
     goToNext:()=>{},
     finished: false,
-    changeCurrentIndex:(idx:number)=>{}
+    changeCurrentIndex:(idx:number)=>{},
+    reset_xp:()=>{}
   });
     
     
@@ -74,6 +76,11 @@ export const LessonProvider: React.FC<LessonProviderProps> = ({ children }) => {
   // Update XP
   const update_xp = (newXp: number)=>{
     setXp((prevXp)=>prevXp + newXp)
+  }
+
+  // Reset XP
+  const reset_xp = ()=>{
+    setXp(0);
   }
 
   const goToNext = ()=>{
@@ -133,7 +140,7 @@ export const LessonProvider: React.FC<LessonProviderProps> = ({ children }) => {
 
 
   return (
-    <LessonContext.Provider value={{ lesson, xp, update_xp, currentIndex, goToNext, changeCurrentIndex, finished, videoMap, lectureMap, v2textMap, t2videoMap, v2actionMap, t2actionMap, loading }}>
+    <LessonContext.Provider value={{ lesson, xp, update_xp, reset_xp, currentIndex, goToNext, changeCurrentIndex, finished, videoMap, lectureMap, v2textMap, t2videoMap, v2actionMap, t2actionMap, loading }}>
       {children}
     </LessonContext.Provider>
   );

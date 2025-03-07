@@ -9,30 +9,37 @@ import { Reply } from './Icons'
 
 const reply = require("../assets/images/lesson/reply.png")
 
-const VideoPlayer:React.FC<{video?:IVideo}> = ({video}) => {
+const VideoPlayer:React.FC<{video?:IVideo, ClassName?:string, loop?:boolean}> = ({
+    video,
+    ClassName="w-80 h-52 border-[5px]  border-yellow-bold",
+    loop=false
+}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [loading, setLoading] = useState(false)
   return (
-    <View className='relative w-full h-56 border-[5px] rounded-2xl overflow-hidden border-yellow-bold'>
-        <View className='absolute z-20 right-0 m-4'>
-            {!isPlaying? <Reply size='20' />:""}
-        </View>
+    <View className={`relative ${ClassName} rounded-2xl overflow-hidden`}>
         {
-            isPlaying?(
+            !loop?
+            <View className='absolute z-20 right-0 m-4'>
+                {!isPlaying? <Reply size='20' />:""}
+            </View>
+            :<></>
+        }
+        {
+            isPlaying || loop?(
                 <Video
                     // ref={videoRef}
                     source={{ uri: video?.url! }}
                     style={{ width: '100%', height: "100%" }}
-                    className='h-full'
                     // useNativeControls
                     shouldPlay
+                    isLooping={loop}
                     isMuted
                     resizeMode={ResizeMode.COVER}
                     onLoadStart={() => setLoading(true)}
                     onLoad={() => setLoading(false)}
                     onError={(e) => console.error("Video error:", e)}
-                    onTouchStart={()=>setIsPlaying(false)}
-                    
+                    onTouchStart={()=>setIsPlaying(false || loop)}
                     
                 />
             ):(

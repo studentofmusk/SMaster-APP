@@ -9,9 +9,12 @@ import { StatusBar } from 'expo-status-bar';
 import { Quit } from '@/components/Icons';
 import Lecture from '@/components/Lecture';
 import V2Text from '@/components/V2Text';
+import T2Video from '@/components/T2Video';
+import V2Action from '@/components/V2Action';
+import T2Action from '@/components/T2Action';
 
 const topic = () => {
-  const {lesson, currentIndex, goToNext, finished, videoMap, lectureMap, v2textMap, t2videoMap, v2actionMap, t2actionMap, loading} = useLesson();
+  const {lesson, currentIndex, goToNext, update_xp, finished, videoMap, lectureMap, v2textMap, t2videoMap, v2actionMap, t2actionMap, loading} = useLesson();
   const [TOPIC, setTOPIC] = useState<ITopic>();
   useEffect(()=>{
     setTOPIC(lesson?.topics[currentIndex]);
@@ -31,20 +34,33 @@ const topic = () => {
       case TopicTypes.LECTURE:{
         let lecture = lectureMap.get(TOPIC.topic_id);
         let video = videoMap.get(lecture?.video ||"");
-        return <Lecture lecture={lecture} video={video}/>;
+        return <Lecture lecture={lecture} video={video} onCorrect={()=>update_xp(TOPIC.xp)} onWrong={()=>{}}/>;
       }
       case TopicTypes.V2TEXT:{
         let v2text = v2textMap.get(TOPIC.topic_id);
         let video = videoMap.get(v2text?.video ||"");
-
-        return <V2Text v2text={v2text} video={video} />;
+        
+        return <V2Text v2text={v2text} video={video} onCorrect={()=>update_xp(TOPIC.xp)} onWrong={()=>{}} />;
       }
-      case TopicTypes.T2VIDEO:
-        return <Text onPress={()=>goToNext()}>T2Video Topic: {t2videoMap.get(TOPIC.topic_id)?.title}</Text>;
-      case TopicTypes.V2ACTION:
-        return <Text onPress={()=>goToNext()}>V2Action Topic: {v2actionMap.get(TOPIC.topic_id)?.title}</Text>;
-      case TopicTypes.T2ACTION:
-        return <Text onPress={()=>goToNext()}>T2Action Topic: {t2actionMap.get(TOPIC.topic_id)?.title}</Text>;
+      case TopicTypes.T2VIDEO:{
+        const t2video = t2videoMap.get(TOPIC.topic_id);
+        const videos = (t2video?.options || [])
+            .map(video_id => videoMap.get(video_id))
+            .filter(video => video !== undefined);
+            return <T2Video t2video={t2video} videos={videos} onCorrect={()=>update_xp(TOPIC.xp)} onWrong={()=>{}} />;
+          }
+      case TopicTypes.V2ACTION:{
+        let v2action = v2actionMap.get(TOPIC.topic_id);
+        let video = videoMap.get(v2action?.video ||"");
+        
+        return <V2Action v2action={v2action} video={video} />;
+        }
+      case TopicTypes.T2ACTION:{
+        let t2action = t2actionMap.get(TOPIC.topic_id);
+        let video = videoMap.get(t2action?.video ||"");
+        
+        return <T2Action t2action={t2action} video={video} />;
+        }
       default:
         return <Text onPress={()=>goToNext()}>Unknown Topic Type</Text>;
     }

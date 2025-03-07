@@ -10,11 +10,14 @@ const startHero = require("../../assets/images/startHero.jpg");
 
 const Index = () => {
 
-  const { lesson, loading, changeCurrentIndex} = useLesson();
+  const { lesson, loading, changeCurrentIndex, reset_xp} = useLesson();
 
-  useEffect(()=>{
+  const handleStart = ()=>{
     changeCurrentIndex(0);
-  }, [])
+    reset_xp();
+    router.push("/(lesson)/topic")
+
+  }
 
   return (
     <SafeAreaView className='h-full bg-sweet-pink'>
@@ -30,7 +33,7 @@ const Index = () => {
             <Text className='text-white text-3xl font-bold'>{lesson?.lesson_type}</Text>
             <Text className='text-white text-xl mt-2'>Total XP: {lesson?.total_xp}</Text>
           </View>
-          <TouchableOpacity onPress={()=>router.push("/(lesson)/topic")} className='rounded-sm px-10 py-2 bg-white'>
+          <TouchableOpacity onPress={handleStart} className='rounded-sm px-10 py-2 bg-white'>
             <Text className='text-2xl uppercase text-sweet-pink'>Start</Text>
           </TouchableOpacity>
         </>
