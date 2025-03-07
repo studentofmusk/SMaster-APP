@@ -5,7 +5,12 @@ import VideoPlayer from './VideoPlayer'
 import { Eye, Sound } from './Icons'
 import { useLesson } from '@/contexts/LessonContext'
 
-const Lecture: React.FC<{ lecture?: ILecture, video?: IVideo }> = ({ lecture, video }) => {
+const Lecture: React.FC<{ lecture?: ILecture, video?: IVideo, onCorrect:()=>void, onWrong:()=>void }> = ({ 
+  lecture,
+  video,
+  onCorrect,
+  onWrong
+}) => {
   const {goToNext} = useLesson();
   const handleNext = ()=>{
     goToNext();
