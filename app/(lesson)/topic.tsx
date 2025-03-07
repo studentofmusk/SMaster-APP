@@ -22,11 +22,10 @@ const topic = () => {
 
   useEffect(()=>{
     if(finished){
-      router.push("/(lesson)/finish")
+      router.replace("/(lesson)/finish")
     }
   }, [finished])
-
-
+  
   const renderTopicContent = () => {
     if (!TOPIC) return <Text>Topic Not Found</Text>;
 

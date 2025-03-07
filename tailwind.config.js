@@ -24,6 +24,8 @@ module.exports = {
         "sky-blue": "rgb(21 198 242)",
         "green": "rgb(77 129 121)",
         "green-light": "rgb(209 232 227)",
+        "green-active":"#399918",
+        "red-active":"#D63B3B",
         "gray-900": "rgb(102 92 92)",
         "dark-pink": "rgb(171 40 103)",
         "pale-white": "rgb(251 251 246)",
@@ -34,7 +36,8 @@ module.exports = {
       },
       fontFamily:{
         junge: ["Junge", "sans-serif"],
-        inder: ["Inder", "sans-serif"]
+        inder: ["Inder", "sans-serif"],
+        inter: ["Inter 24pt Regular", "sans-serif"],
       }
     },
   },

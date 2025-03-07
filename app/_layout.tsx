@@ -18,7 +18,7 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     Junge: require('../assets/fonts/Junge-Regular.ttf'),
     Inder: require('../assets/fonts/Inder-Regular.ttf'),
-
+    Inter: require('../assets/fonts/Inter-Regular.ttf'),
   });
 
   // Hide splash screen once fonts are loaded
