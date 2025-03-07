@@ -13,6 +13,7 @@ const Lecture: React.FC<{ lecture?: ILecture, video?: IVideo, onCorrect:()=>void
 }) => {
   const {goToNext} = useLesson();
   const handleNext = ()=>{
+    onCorrect();
     goToNext();
   }
   return (

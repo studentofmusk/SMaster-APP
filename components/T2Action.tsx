@@ -5,39 +5,39 @@ import { useLesson } from '@/contexts/LessonContext';
 import VideoPlayer from './VideoPlayer';
 import { Camera, Sound } from './Icons';
 
-const T2Action: React.FC<{t2action?: IT2Action, video?:IVideo}> = ({
-    t2action,
-    video
+const T2Action: React.FC<{ t2action?: IT2Action, video?: IVideo }> = ({
+  t2action,
+  video
 }) => {
-    const {goToNext} = useLesson();
-    const handleNext = ()=>{
-      goToNext();
-    }
-    return (
-      <View className='h-[90%] w-full px-10 items-center justify-between'>
-        <View className='w-full items-center'>
-          <Text className='mb-5 pl-3 text-3xl text-green font-bold w-full'>Action!</Text>
-          
-          <View className='mt-4 p-4 rounded-xl bg-green-light '>
-            <Text className='text-gray-900 text-2xl font-bold uppercase'>{t2action?.title}</Text>
-            </View>
-            <View className='flex-row mt-4'>
-            <View><Sound size='25' /></View>
-            </View>
+  const { goToNext } = useLesson();
+  const handleNext = () => {
+    goToNext();
+  }
+  return (
+    <View className='h-[97%] w-full items-center justify-between'>
+      <View className='w-full items-center'>
+        <Text className='mb-5 pl-10 text-3xl text-green font-bold w-full'>Action!</Text>
+
+        <View className='mt-4 p-4 rounded-xl bg-green-light '>
+          <Text className='text-gray-900 text-2xl font-bold uppercase'>{t2action?.title}</Text>
         </View>
-        <TouchableOpacity className='bg-violet w-64 h-40 rounded justify-center items-center'>
-            <Camera size='35' />
-            <Text className='text-white font-bold'>START</Text>
-            <View className='flex-row'>
-                <Text className='text-sweet-pink font-bold'>RECORD</Text>
-                <Text className='text-white font-bold'>ING</Text>
-            </View>
-        </TouchableOpacity>
-  
-        <TouchableOpacity onPress={handleNext} className='px-32 py-5 bg-sky-blue rounded-xl'>
-          <Text className='text-white text-2xl' >Next</Text>
+        <View className='flex-row mt-4'>
+          <View><Sound size='25' /></View>
+        </View>
+        <TouchableOpacity className='mt-10 bg-violet w-64 h-40 rounded justify-center items-center'>
+          <Camera size='35' />
+          <Text className='text-white font-bold'>START</Text>
+          <View className='flex-row'>
+            <Text className='text-sweet-pink font-bold'>RECORD</Text>
+            <Text className='text-white font-bold'>ING</Text>
+          </View>
         </TouchableOpacity>
       </View>
-    )
+
+      <TouchableOpacity onPress={handleNext} className='px-32 py-2 mb-10 border-2 border-sky-blue rounded-xl'>
+        <Text className='text-sky-blue text-xl' >Skip for now</Text>
+      </TouchableOpacity>
+    </View>
+  )
 }
 export default T2Action

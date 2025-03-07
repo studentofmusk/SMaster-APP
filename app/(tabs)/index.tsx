@@ -1,4 +1,4 @@
-import { View, Image, Text, ScrollView, FlatList, Dimensions } from 'react-native'
+import { View, Image, Text, ScrollView, FlatList, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
@@ -1008,7 +1008,11 @@ const index = () => {
     3:"translate-x-0"
     
   }
-
+  
+  const handleTileClick = (isCurrent:boolean, lesson_id: string)=>{
+    // if (!isCurrent) return;
+    router.push(`/(lesson)?id=${lesson_id}`)
+  }
   
   useEffect(() => {
     setLessonMap(new Map(lessons.map((lesson) => [lesson._id, lesson])));
@@ -1104,9 +1108,9 @@ const index = () => {
 
                   }
                   return (
-                  <View onTouchStart={()=>router.push(`/(lesson)?id=${lesson}`)} className={`scale-75 mx-auto translate-x-20 ${positionClass[(lesson_idx) % Object.keys(positionClass).length  as keyof typeof positionClass ]}`}>
+                  <TouchableOpacity onPress={()=>handleTileClick(isCurr, lesson)} className={`scale-75 mx-auto translate-x-20 ${positionClass[(lesson_idx) % Object.keys(positionClass).length  as keyof typeof positionClass ]}`}>
                       {Tile}
-                  </View>
+                  </TouchableOpacity>
                   )
                 }}
               />
