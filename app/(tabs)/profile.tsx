@@ -21,7 +21,7 @@ const book = require("../../assets/images/Book.png")
 
 
 
-const Box:React.FC<{source:any, data: string, title: string, className?: string, margin?:boolean }> = ({
+const Box:React.FC<{source:any, data: string | number, title: string, className?: string, margin?:boolean }> = ({
   source, data, title, className="", margin=false
 })=>(
   <View className='flex-row w-40 my-10'>
@@ -76,7 +76,7 @@ const profile = () => {
         <View className='flex-row flex-wrap justify-center'>
           
         <Box data='57' margin={true} source={fire} title='Daily Streaks' className='size-14' />
-        <Box data='1983' source={thunder} title='Total XP'  />
+        <Box data={user?.xp || 0} source={thunder} title='Total XP'  />
         <View className='flex-row items-center w-40 my-10 mr-3'>
           <CircularProgress progress={10} size={40} strokeWidth={4} className='text-xs'  />
           <View className='ml-3'>
