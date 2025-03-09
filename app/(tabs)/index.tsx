@@ -8,6 +8,7 @@ import { IGroup, ILesson, ISeason } from '@/interfaces/Course';
 import { Tile1, Tile2, Tile3, Tile4, Tile5, Tile6, Tile7, Tile8, Tile9 } from '@/components/LevelIcon';
 import { LessonTypes } from '@/enums/Course';
 import { router } from 'expo-router';
+import { useAuth } from '@/hooks/useAuth';
 
 const fire = require("../../assets/images/Fire.png")
 
@@ -15,7 +16,7 @@ const { width } = Dimensions.get("window"); // Get screen width dynamically
 
 
 const index = () => {
-
+  const {loading:Loading} = useAuth();
   const user = useSelector((state: RootState) => state.user.user);
   const loading = useSelector((state: RootState) => state.user.loading);
 
@@ -997,6 +998,7 @@ const index = () => {
       "__v": 2
     }
   ]);
+  const [completed, setCompleted] = useState(0);
 
   // Maps
   const [lessonMap, setLessonMap] = useState<Map<string, ILesson>>(new Map());
@@ -1010,7 +1012,7 @@ const index = () => {
   }
   
   const handleTileClick = (isCurrent:boolean, lesson_id: string)=>{
-    // if (!isCurrent) return;
+    if (!isCurrent) return;
     router.push(`/(lesson)?id=${lesson_id}`)
   }
   
@@ -1021,13 +1023,14 @@ const index = () => {
 
   return (
     <SafeAreaView className='bg-white h-full'>
+      <Text></Text>
       {
         loading?
         <View className='items-center justify-center'>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :<>
-          <Header />
+          <Header total={seasons.length * groups.length * lessons.length || 1} />
       <View className='mt-5 py-5 flex-row justify-between px-10 items-center'>
         <View>
           <Text className='text-2xl text-gray-900 '>Learning</Text>
@@ -1049,7 +1052,6 @@ const index = () => {
           return (
             <>
               <View className='flex-row justify-center'>
-
                 <View className='flex-row items-center justify-center '>
                   <View style={{ width: lineWidth }} className='h-0.5 bg-primary'></View>
                   <View style={{ width: item.title.length * 7 }} className='mx-3'><Text className=' text-center text-xl text-secondary'>{item.title}</Text></View>
@@ -1068,7 +1070,9 @@ const index = () => {
                   let Tile;
                   let isOver = curr_group > group_idx || (curr_group === group_idx &&  curr_lesson >= lesson_idx);
                   let isCurr = curr_group === group_idx &&  curr_lesson === lesson_idx;
-                 
+                //  if(isOver){
+                //   setCompleted((prevCompleted)=>prevCompleted + 1)
+                //  }
 
                   switch(LESSON?.lesson_type){
                     case LessonTypes.LEARNING:{

@@ -8,6 +8,7 @@ export interface IUser {
         ASL: string;
     };
     gender: number;
+    xp: number;
     createdAt: string;
     updatedAt: string;
     __v: number;
