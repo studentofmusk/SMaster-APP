@@ -14,7 +14,7 @@ const VideoPlayer:React.FC<{video?:IVideo, ClassName?:string, loop?:boolean}> = 
     ClassName="w-80 h-52 border-[5px]  border-yellow-bold",
     loop=false
 }) => {
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
     const [loading, setLoading] = useState(false)
   return (
     <View className={`relative ${ClassName} rounded-2xl overflow-hidden`}>

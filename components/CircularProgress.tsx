@@ -6,12 +6,14 @@ interface CircularProgressProps {
   progress: number; // Percentage (0-100)
   size?: number;
   strokeWidth?: number;
+  className?:string;
 }
 
 const CircularProgress: React.FC<CircularProgressProps> = ({
   progress,
   size = 100,
   strokeWidth = 8,
+  className=""
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -45,7 +47,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         />
       </Svg>
       {/* Percentage Text */}
-      <Text  className="absolute  font-bold text-primary">
+      <Text  className={`absolute  font-bold text-primary ${className}`}>
         {progress}%
       </Text>
     </View>

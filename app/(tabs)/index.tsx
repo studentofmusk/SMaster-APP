@@ -1,4 +1,4 @@
-import { View, Image, Text, ScrollView, FlatList, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Image, Text, ScrollView, FlatList, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
@@ -1021,7 +1021,13 @@ const index = () => {
 
   return (
     <SafeAreaView className='bg-white h-full'>
-      <Header />
+      {
+        loading?
+        <View className='items-center justify-center'>
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+        :<>
+          <Header />
       <View className='mt-5 py-5 flex-row justify-between px-10 items-center'>
         <View>
           <Text className='text-2xl text-gray-900 '>Learning</Text>
@@ -1124,6 +1130,8 @@ const index = () => {
 
       <View className='translate-x-20 -translate-x-20 ' />
 
+        </>
+      }
     </SafeAreaView>
   )
 }
