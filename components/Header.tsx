@@ -4,8 +4,9 @@ import CircularProgress from './CircularProgress'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 
-const male = require("../assets/images/profiles/M_AVATAR.png")
-const female = require("../assets/images/profiles/F_AVATAR.png")
+const male = require("../assets/images/profiles/male-1.png")
+const female = require("../assets/images/profiles/female-6.png")
+const base = require("../assets/images/profiles/default.png")
 
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
     return (
         <View className='mt-10 flex flex-row justify-between items-center px-10'>
             <View className='flex flex-row items-center'>
-            <Image source={user?.gender === 0?male:female} className='size-24 mr-5 border rounded-full' />
+            <Image source={user?.gender === 0?male:user?.gender === 1?female:base} className='size-24 mr-5 border rounded-full' />
             <View>
                 <Text>Hello,</Text>
                 {loading ? (

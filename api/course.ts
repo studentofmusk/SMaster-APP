@@ -29,3 +29,6 @@ export const get_t2video = "/course/get-t2video";
 export const get_v2action = "/course/get-v2action";
 export const get_t2action = "/course/get-t2action";
 export const get_videos = "/course/get-videos";
+
+
+export const check_action = "/predict/predict-action"

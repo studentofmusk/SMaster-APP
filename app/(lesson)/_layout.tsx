@@ -10,6 +10,7 @@ const RootLesson = () => {
               <Stack.Screen name='index' options={{headerShown:false}} />
               <Stack.Screen name='topic' options={{headerShown:false}} />
               <Stack.Screen name='finish' options={{headerShown:false}} />
+              <Stack.Screen name='camera' options={{headerShown:false}} />
           </Stack>
     </LessonProvider>
   )

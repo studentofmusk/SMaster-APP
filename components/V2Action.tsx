@@ -1,14 +1,17 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { IV2Action, IVideo } from '@/interfaces/Course'
 import { useLesson } from '@/contexts/LessonContext';
 import VideoPlayer from './VideoPlayer';
 import { Camera, Sound } from './Icons';
+import VideoRecorder from './VideoRecorder';
 
 const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo }> = ({
   v2action,
   video
 }) => {
+
+  const [isRecording, setIsRecording] = useState(false);
   const { goToNext } = useLesson();
   const handleNext = () => {
     goToNext();
@@ -20,14 +23,15 @@ const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo }> = ({
         <VideoPlayer
           video={video}
           key={v2action?._id}
+          ClassName={`${isRecording?"w-60 h-40":"w-80 h-52"} border-[5px]  border-yellow-bold`}
         />
-        <View className='mt-4 p-4 rounded-xl bg-green-light '>
+        <View className={` ${isRecording?"hidden":""} mt-4 p-4 rounded-xl bg-green-light `}>
           <Text className='text-gray-900 text-2xl font-bold uppercase'>{v2action?.title}</Text>
         </View>
-        <View className='flex-row mt-4'>
+        <View className={`${isRecording?"hidden":""} flex-row mt-4`}>
           <View><Sound size='25' /></View>
         </View>
-        <TouchableOpacity className='mt-5 bg-violet w-64 h-40 rounded justify-center items-center'>
+        <TouchableOpacity onPress={()=>setIsRecording(true)} className={`mt-5 ${isRecording?"hidden":""} bg-violet w-64 h-40 rounded justify-center items-center`}>
           <Camera size='35' />
           <Text className='text-white font-bold'>START</Text>
           <View className='flex-row'>
@@ -35,11 +39,19 @@ const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo }> = ({
             <Text className='text-white font-bold'>ING</Text>
           </View>
         </TouchableOpacity>
+        {
+          isRecording?
+          <VideoRecorder action_id={video?.action_id} onCancel={()=>setIsRecording(false)} className="mt-10 rounded-sm" />
+          :<></>
+        }
       </View>
-
-      <TouchableOpacity onPress={handleNext} className='px-32 py-2 mb-10 border-2 border-sky-blue rounded-xl'>
-        <Text className='text-sky-blue text-xl' >Skip for now</Text>
-      </TouchableOpacity>
+      {
+       isRecording?
+       <></>
+       :<TouchableOpacity onPress={handleNext} className='px-32 py-2 mb-10 border-2 border-sky-blue rounded-xl'>
+          <Text className='text-sky-blue text-xl' >Skip for now</Text>
+        </TouchableOpacity>
+      }
     </View>
   )
 }
