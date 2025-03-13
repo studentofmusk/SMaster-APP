@@ -56,9 +56,9 @@ const V2Text: React.FC<{ video?: IVideo; v2text?: IV2Text; onCorrect: () => void
                 key={idx}
                 onPress={() => setSelect(idx)}
                 className={`border shadow bg-white rounded-lg py-4 w-36 mb-3 mr-5 
-                  ${reveal && text === video.title ? 'border-2 border-green-active bg-green-active' : ''} 
-                  ${select === idx && reveal && text !== video.title ? 'border border-red-600' : ''} 
-                  ${select === idx && !reveal ? 'border border-yellow-bold' : 'border-[0.5px] border-gray-900'}`}
+                  ${reveal && text === video.title ? 'border-2 border-green-active !bg-green-active' : ''} 
+                  ${select === idx && reveal && text !== video.title ? 'border-red-600' : ''} 
+                  ${select === idx && !reveal ? 'border border-red-active-bold' : 'border-[0.5px] border-gray-900'}`}
               >
                 <Text className={`text-center text-xl uppercase ${reveal && text === video.title ? 'text-white' : 'text-gray-900'}`}>{text}</Text>
               </TouchableOpacity>
@@ -70,7 +70,7 @@ const V2Text: React.FC<{ video?: IVideo; v2text?: IV2Text; onCorrect: () => void
         <Text className='text-white text-2xl'>Next</Text>
       </TouchableOpacity>
 
-      <View className={`absolute duration-300 ${reveal ? "bottom-0" : "-bottom-60"} h-60 px-9 pt-6 rounded-t-2xl ${status ? "bg-green-active" : "bg-red-active"} w-full items-start`}>
+      <View style={{animationDuration:"300"}} className={`absolute duration-300 ${reveal ? "bottom-0" : "-bottom-60"} h-60 px-9 pt-6 rounded-t-2xl ${status ? "bg-green-active" : "bg-red-active"} w-full items-start`}>
         <Text className='text-white text-3xl font-bold italic'>{status ? "CORRECT" : "INCORRECT"}</Text>
         <Text className='text-xl font-bold text-white mt-5 italic'>{status ? "Great Job" : "Better luck next time!"}</Text>
         <TouchableOpacity onPress={goToNext} className='mt-3 bg-white rounded-xl w-[320px] py-4 mx-auto'>

@@ -9,9 +9,10 @@ const female = require("../assets/images/profiles/female-6.png")
 const base = require("../assets/images/profiles/default.png")
 
 
-const Header = () => {
+const Header: React.FC<{total:number}> = ({total=1}) => {
     const user = useSelector((state:RootState)=>state.user.user);
     const loading = useSelector((state:RootState)=>state.user.loading);
+    
     
     return (
         <View className='mt-10 flex flex-row justify-between items-center px-10'>

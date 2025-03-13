@@ -20,6 +20,7 @@ module.exports = {
         "yellow-bold": "rgb(254 185 57)",
         "yellow-base": "rgb(250 234 118)",
         "yellow-bright": "rgb(253 238 35)",
+        "my-yellow":"#FFEFC7",
         "gray-700": "rgb(155 149 149)",
         "sky-blue": "rgb(21 198 242)",
         "green": "rgb(77 129 121)",

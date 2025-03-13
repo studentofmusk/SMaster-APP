@@ -35,13 +35,15 @@ const RootTab = () => {
             tabBarIcon:(({color})=><Image className='size-8' source={homeImg} />)
           }}
         />
-        <Tabs.Screen 
+        {/* <Tabs.Screen 
           name='notification'
+
           options={{
             title: "Notification",
             tabBarIcon:(({color})=><Image className='size-8' source={bellImg} />)
           }}
-        />
+          
+        /> */}
         <Tabs.Screen 
           name='library'
           options={{
