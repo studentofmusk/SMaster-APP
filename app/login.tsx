@@ -43,6 +43,7 @@ const Login = () => {
             Alert.alert("Login Successful!");
             router.replace("/(tabs)");
         } catch (error) {
+            console.log(error)
             Alert.alert("Login Error:", String(error));
         }
     };

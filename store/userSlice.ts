@@ -46,6 +46,7 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
     try {
         const response = await login(email, password);
         if (!response.success) {
+            console.log(response);
             throw new Error(response.message); // Handle API error properly
         }
 
