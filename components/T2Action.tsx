@@ -6,9 +6,11 @@ import VideoPlayer from './VideoPlayer';
 import { Camera, Sound } from './Icons';
 import VideoRecorder from './VideoRecorder';
 
-const T2Action: React.FC<{ t2action?: IT2Action, video?: IVideo }> = ({
+const T2Action: React.FC<{ t2action?: IT2Action, video?: IVideo, onCorrect:()=>void, onWrong:()=>void }> = ({
   t2action,
-  video
+  video,
+  onCorrect=()=>{},
+  onWrong=()=>{}
 }) => {
   const [isRecording, setIsRecording] = useState(false);
   const { goToNext } = useLesson();
@@ -37,7 +39,7 @@ const T2Action: React.FC<{ t2action?: IT2Action, video?: IVideo }> = ({
         </TouchableOpacity>
         {
           isRecording?
-          <VideoRecorder action_id={video?.action_id} onCancel={()=>setIsRecording(false)} className="mt-10 rounded-sm" />
+          <VideoRecorder action_id={video?.action_id} onCancel={()=>setIsRecording(false)} onCorrect={onCorrect} onWrong={onWrong} className="mt-10 rounded-sm" />
           :<></>
         }
       </View>

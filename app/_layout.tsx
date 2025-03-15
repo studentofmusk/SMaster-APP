@@ -8,8 +8,6 @@ import {Provider} from "react-redux";
 import 'react-native-reanimated';
 import { View, ActivityIndicator, Text } from "react-native";
 import { store } from "@/store/store";
-import { useAuth } from "@/hooks/useAuth";
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 

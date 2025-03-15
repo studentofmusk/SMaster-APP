@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API, { IAPIResponse } from "../api/axiosInstance"; // Import your Axios instance
 
+
 export const useAPI = <T>() => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -14,17 +15,19 @@ export const useAPI = <T>() => {
   ): Promise<IAPIResponse<T>> => {
     setLoading(true);
     setError(null);
-
+  
     try {
       const response = await API.request<IAPIResponse<T>>({
         url: endpoint,
         method,
-        headers,
+        headers: {
+          ...headers,
+          ...(body instanceof FormData ? {} : { "Content-Type": "application/json" }),
+        },
         data: body,
       });
-
+  
       const apiResponse = response.data;
-
       if (apiResponse.success) {
         setData(apiResponse.data || null);
       } else {
@@ -36,7 +39,7 @@ export const useAPI = <T>() => {
       console.error("API Error:", err);
       const errorMessage = err.response?.data?.message || "Network error occurred";
       setError(errorMessage);
-
+  
       return {
         success: false,
         message: errorMessage,
@@ -46,6 +49,7 @@ export const useAPI = <T>() => {
       setLoading(false);
     }
   };
+  
 
   return { fetchAPI, data, loading, error };
 };

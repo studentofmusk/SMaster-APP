@@ -52,13 +52,13 @@ const topic = () => {
         let v2action = v2actionMap.get(TOPIC.topic_id);
         let video = videoMap.get(v2action?.video ||"");
         
-        return <V2Action v2action={v2action} video={video} />;
+        return <V2Action  v2action={v2action} video={video} onCorrect={()=>update_xp(TOPIC.xp)} onWrong={()=>{}} />;
         }
       case TopicTypes.T2ACTION:{
         let t2action = t2actionMap.get(TOPIC.topic_id);
         let video = videoMap.get(t2action?.video ||"");
         
-        return <T2Action t2action={t2action} video={video} />;
+        return <T2Action t2action={t2action} video={video} onCorrect={()=>update_xp(TOPIC.xp)} onWrong={()=>{}} />;
         }
       default:
         return <Text onPress={()=>goToNext()}>Unknown Topic Type</Text>;

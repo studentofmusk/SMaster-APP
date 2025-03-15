@@ -20,7 +20,6 @@ export const useAuth = (redirect:string="") => {
             router.replace(redirect as any);
           }
         } else {
-        
           router.replace("/start");
         }
       } catch (error) {
