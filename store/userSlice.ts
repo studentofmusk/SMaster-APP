@@ -3,6 +3,7 @@ import { fetchUser, login } from "@/api/auth";
 import {AppDispatch} from "./store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IUser } from "@/interfaces/User";
+import { router } from "expo-router";
 
 interface IUserState {
     user: null | IUser;
@@ -64,14 +65,12 @@ export const loginUser = (email: string, password: string) => async (dispatch: A
     }
 };
 
-
-
 export const fetchUserProfile = ()=> async(dispatch: AppDispatch)=>{
     try {
         const userData = await fetchUser();
         // console.log("Fetched:", userData)
         dispatch(setUser(userData.data));
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 };

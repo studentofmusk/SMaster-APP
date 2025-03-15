@@ -5,13 +5,14 @@ import { Quit } from './Icons';
 import { useAPI } from '@/hooks/useAPI';
 import { check_action } from '@/api/course';
 
-const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number, className?:string, onCancel:()=>void }> = ({ 
+const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number, className?:string, onCancel:()=>void, setOkay:(ok:boolean)=>void }> = ({ 
     duration = 10, 
     className="", 
     action_id=0,
-    onCancel=()=>{}
+    onCancel=()=>{},
+    setOkay=(ok:boolean)=>{}
  }) => {
-    const {fetchAPI:uploadVideo, loading} = useAPI()
+    const {fetchAPI:uploadVideo, loading} = useAPI<boolean>()
     const [cameraPermission, requestCameraPermission] = useCameraPermissions();
     const [microphonePermission, requestMicrophonePermission] = useMicrophonePermissions();
     const [tempUri, setTempUri] = useState<string>("");
@@ -20,6 +21,7 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
     const cameraRef = useRef<CameraView>(null);
     const [isRecording, setIsRecording] = useState(false);
     const [recordingMessage, setRecordingMessage] = useState('');
+
     
     
     // -------------------------RECORDING------------------------------
@@ -42,6 +44,7 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
 
             if (videoData?.uri) {
                 setTempUri(videoData.uri);
+                check();
             }
 
         } catch (error) {
@@ -60,10 +63,21 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
             type: "video/mp4",
             name:`video_${Date.now()}.mp4`
         } as any);
-        formData.append("action_id", `${action_id}`)
+        formData.append("action_id", `${action_id}`);
 
         try {
-            uploadVideo(check_action, "POST", formData);
+            const response = await uploadVideo(check_action, "POST", formData, {
+                "Content-Type":"multipart/form-data"
+            });
+            if(response.success){
+                if(response.data){
+                    setOkay(true)
+                }else{
+                    Alert.alert("Action NOT Matched!\nTry Again!\nYou can do it!");
+                }
+            }else{
+                Alert.alert(response.message);
+            }
         } catch (error) {
             Alert.alert("Something went wrong!")
         }
@@ -113,7 +127,11 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
                 <View className='px-6 py-3 bg-white z-20 mb-3 rounded-md' >
                     {isRecording ? (
                         <TouchableOpacity onPress={()=>cameraRef.current?.stopRecording()} ><Text>{recordingMessage}</Text></TouchableOpacity>
-                    ) : (
+                    ) : 
+                    loading? (
+                    <ActivityIndicator size="small" color="blue" />
+                            )
+                    :(
                         <TouchableOpacity onPress={startRecording}>
                             <Text className='uppercase w-[100px] text-center text-sky-blue'  >Start</Text>
                         </TouchableOpacity>
@@ -123,12 +141,6 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
                     <Quit size='30' color='white' />
                 </TouchableOpacity>
             </CameraView>
-            <TouchableOpacity onPress={check} disabled={loading} >
-                {   loading
-                    ?<ActivityIndicator size="small" color="blue" />
-                    :<Text>Check</Text>
-                }
-            </TouchableOpacity>
             
         </View>
     );
