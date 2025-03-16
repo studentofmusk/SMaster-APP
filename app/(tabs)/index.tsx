@@ -1,5 +1,5 @@
 import { View, Image, Text, ScrollView, FlatList, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -998,7 +998,6 @@ const index = () => {
       "__v": 2
     }
   ]);
-  const [completed, setCompleted] = useState(0);
 
   // Maps
   const [lessonMap, setLessonMap] = useState<Map<string, ILesson>>(new Map());
@@ -1020,24 +1019,35 @@ const index = () => {
     setLessonMap(new Map(lessons.map((lesson) => [lesson._id, lesson])));
   }, [lessons])
 
+  const completed = useMemo(() => {
+    let count = 0;
+    groups.forEach((group, group_idx) => {
+      group.lessons.forEach((lesson, lesson_idx) => {
+        if (curr_group > group_idx || (curr_group === group_idx && curr_lesson > lesson_idx)) {
+          count++;
+        }
+      });
+    });
+    return count;
+  }, [groups, curr_group, curr_lesson]);
+
 
   return (
     <SafeAreaView className='bg-white h-full'>
-      <Text></Text>
       {
         loading?
         <View className='items-center justify-center'>
           <ActivityIndicator size="large" color="blue" />
         </View>
         :<>
-          <Header total={seasons.length * groups.length * lessons.length || 1} />
+          <Header  percentage={(completed/lessons.length)*100} />
       <View className='mt-5 py-5 flex-row justify-between px-10 items-center'>
         <View>
           <Text className='text-2xl text-gray-900 '>Learning</Text>
         </View>
         <View className='flex-row items-center'>
           <Image source={fire} className='size-10 mr-1' />
-          <Text>57</Text>
+          <Text>{user?.streak || 0}</Text>
         </View>
       </View>
 
@@ -1054,7 +1064,7 @@ const index = () => {
               <View className='flex-row justify-center'>
                 <View className='flex-row items-center justify-center '>
                   <View style={{ width: lineWidth }} className='h-0.5 bg-primary'></View>
-                  <View style={{ width: item.title.length * 7 }} className='mx-3'><Text className=' text-center text-xl text-secondary'>{item.title}</Text></View>
+                  <View style={{ width: item.title.length * 7 }} className='mx-3'><Text className=' text-center text-base text-secondary'>{item.title} </Text></View>
                   <View style={{ width: lineWidth }} className='h-0.5 bg-primary'></View>
                   <Text className='ml-2 text-primary bg-gray-400 rounded-full size-5 text-center'>i</Text>
                 </View>
@@ -1070,9 +1080,7 @@ const index = () => {
                   let Tile;
                   let isOver = curr_group > group_idx || (curr_group === group_idx &&  curr_lesson >= lesson_idx);
                   let isCurr = curr_group === group_idx &&  curr_lesson === lesson_idx;
-                //  if(isOver){
-                //   setCompleted((prevCompleted)=>prevCompleted + 1)
-                //  }
+                 
 
                   switch(LESSON?.lesson_type){
                     case LessonTypes.LEARNING:{

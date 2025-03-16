@@ -77,7 +77,7 @@ const profile = () => {
           
         <Box data='57' margin={true} source={fire} title='Daily Streaks' className='size-14' />
         <Box data={user?.xp || 0} source={thunder} title='Total XP'  />
-        <View className='flex-row items-center w-40 my-10 mr-3'>
+        <View className='flex-row items-center w-40 my-10 mr-2'>
           <CircularProgress progress={10} size={40} strokeWidth={4} className='text-xs'  />
           <View className='ml-3'>
             <Text className='font-bold text-lg text-violet'>{10}</Text>

@@ -43,7 +43,7 @@ export const useAPI = <T>() => {
       return {
         success: false,
         message: errorMessage,
-        errors: err.response?.data?.errors || err.message,
+        errors: err.response?.data?.error || err.message,
       };
     } finally {
       setLoading(false);
