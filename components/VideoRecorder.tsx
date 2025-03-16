@@ -5,12 +5,12 @@ import { Quit } from './Icons';
 import { useAPI } from '@/hooks/useAPI';
 import { check_action } from '@/api/course';
 
-const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number, className?:string, onCancel:()=>void, setOkay:(ok:boolean)=>void }> = ({ 
+const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number, className?:string, onCancel:()=>void, setStatus:(status: "idle"|"completed"|"recording")=>void }> = ({ 
     duration = 10, 
     className="", 
     action_id=0,
     onCancel=()=>{},
-    setOkay=(ok:boolean)=>{}
+    setStatus=(status)=>{}
  }) => {
     const {fetchAPI:uploadVideo, loading} = useAPI<boolean>()
     const [cameraPermission, requestCameraPermission] = useCameraPermissions();
@@ -22,6 +22,18 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
     const [isRecording, setIsRecording] = useState(false);
     const [recordingMessage, setRecordingMessage] = useState('');
 
+    const isFirstRun = useRef(true);
+
+    useEffect(() => {
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return; // Skip first run
+        }
+        
+        if (tempUri) {
+            check();
+        }
+    }, [tempUri]);
     
     
     // -------------------------RECORDING------------------------------
@@ -44,7 +56,6 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
 
             if (videoData?.uri) {
                 setTempUri(videoData.uri);
-                check();
             }
 
         } catch (error) {
@@ -71,7 +82,7 @@ const VideoRecorder: React.FC<{ action_id: number | undefined, duration?: number
             });
             if(response.success){
                 if(response.data){
-                    setOkay(true)
+                    setStatus("completed")
                 }else{
                     Alert.alert("Action NOT Matched!\nTry Again!\nYou can do it!");
                 }

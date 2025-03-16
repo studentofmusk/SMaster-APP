@@ -25,7 +25,7 @@ const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo, onCorrect?: () 
   };
 
   return (
-    <View className="h-[97%] w-full items-center justify-between flex-1">
+    <View className="w-full items-center justify-between flex-1">
       <View className="w-full items-center">
         <Text className="mb-5 pl-10 text-3xl text-green font-bold w-full">Action!</Text>
 
@@ -65,7 +65,7 @@ const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo, onCorrect?: () 
             action_id={video?.action_id}
             duration={5}
             onCancel={() => setStatus("idle")}
-            setOkay={() => setStatus("completed")}
+            setStatus={setStatus}
             className="mt-10 rounded-sm"
           />
         )}
@@ -82,7 +82,7 @@ const V2Action: React.FC<{ v2action?: IV2Action, video?: IVideo, onCorrect?: () 
       
       <TouchableOpacity
         onPress={handleNext}
-        className={`px-32 py-3 mb-16 ${status === "completed" ? "bg-sky-blue" : "border-2 border-sky-blue"} rounded-xl`}
+        className={`px-32 py-3 mb-16  ${status === "completed" ? "bg-sky-blue" :status== "recording"? "hidden" :"border-2 border-sky-blue"} rounded-xl`}
       >
         <Text className={status === "completed" ? "text-white" : "text-sky-blue"} text-xl>
           {status === "completed" ? "Next" : "Skip for now"}

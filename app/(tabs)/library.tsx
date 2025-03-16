@@ -48,16 +48,20 @@ const library = () => {
         <Text className='text-gray-800 text-2xl'>Library</Text>
       </View>
       {!explore?
-      <View className='mt-5 p-5 flex-row items-start w-[90%] mx-auto bg-my-yellow h-72'>
+      <View className='mt-5 p-5 w-[90%] mx-auto bg-my-yellow h-72'>
+      <View className='flex-row items-start '>
         <Image 
         source={lib_img} 
         className='size-40 rounded-lg' 
         style={{resizeMode:"contain"}} 
         />
         <View className='ml-5 mt-4 items-start' style={{flex:1}}>
-          <Text className='text-violet text-2xl uppercase font-bold'>Just refresh {"\n"}your Brain!</Text>
-          <Text className='text-primary text-md mt-2' >Here you can Revise all the concept you’ve learned</Text>
-          <TouchableOpacity className='p-3 bg-[#F0F0F0] mt-4' onPress={()=>setExplore(true)} style={{
+          <Text className='text-violet text-xl uppercase font-bold'>Just refresh {"\n"}your Brain!</Text>
+          <Text className='text-primary mt-2' >Here you can Revise all the concept you’ve learned</Text>
+        </View>
+        
+        </View>
+        <TouchableOpacity className='p-3 bg-[#F0F0F0] mt-4' onPress={()=>setExplore(true)} style={{
             shadowColor:"#000",
             shadowOffset:{
               height:2,
@@ -67,10 +71,9 @@ const library = () => {
             shadowRadius:3.84,
             elevation:3
           }}>
-            <Text className='text-black text-lg'>Explore Library</Text>
+            <Text className='text-black text-center text-lg'>Explore Library</Text>
           </TouchableOpacity>
-        </View>
-
+          
       </View>
       :<View style={{flex:1}}>
 

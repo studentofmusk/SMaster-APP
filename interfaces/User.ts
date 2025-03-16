@@ -9,6 +9,10 @@ export interface IUser {
     };
     gender: number;
     xp: number;
+    profile:string;
+    streak:number;
+    highestStreak: number;
+    lastActive: Date;
     createdAt: string;
     updatedAt: string;
     __v: number;
